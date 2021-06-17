@@ -23,7 +23,9 @@ options_dict = {'length':
                 'time':
                     ["Second", "Minute", "Hour", "Day", "Week", "Month", "Year"],
                 'storage':
-                    ["Byte", "Kilobyte", "Megabyte", "Gigabyte", "Terabyte", "Petabyte"]}
+                    ["Byte", "Kilobyte", "Megabyte", "Gigabyte", "Terabyte", "Petabyte"],
+                'speed':
+                    ["MPH", "KPH", "Knot"]}
 
 options_list = options_dict.get('length')
 
@@ -163,65 +165,10 @@ def create_options_window():
 
     new_window.mainloop()  # End of creating options window
 
-# these 4 functions are what changes the options presented in the unit selections
-def set_to_volume():
-    new_options_list = options_dict.get('volume')
-    unit_selector1['menu'].delete(0, END)
-    unit_selector2['menu'].delete(0, END)
 
-    inputUnit.set(new_options_list[0])
-    outputUnit.set(new_options_list[0])
-
-    for option in new_options_list:
-        unit_selector1['menu'].add_command(label=option, command=tk._setit(inputUnit, option))
-
-    for option in new_options_list:
-        unit_selector2['menu'].add_command(label=option, command=tk._setit(outputUnit, option))
-
-def set_to_length():
-    new_options_list = options_dict.get('length')
-    unit_selector1['menu'].delete(0, END)
-    unit_selector2['menu'].delete(0, END)
-
-    inputUnit.set(new_options_list[0])
-    outputUnit.set(new_options_list[0])
-
-    for option in new_options_list:
-        unit_selector1['menu'].add_command(label=option, command=tk._setit(inputUnit, option))
-
-    for option in new_options_list:
-        unit_selector2['menu'].add_command(label=option, command=tk._setit(outputUnit, option))
-
-def set_to_weight():
-    new_options_list = options_dict.get('weight')
-    unit_selector1['menu'].delete(0, END)
-    unit_selector2['menu'].delete(0, END)
-
-    inputUnit.set(new_options_list[0])
-    outputUnit.set(new_options_list[0])
-
-    for option in new_options_list:
-        unit_selector1['menu'].add_command(label=option, command=tk._setit(inputUnit, option))
-
-    for option in new_options_list:
-        unit_selector2['menu'].add_command(label=option, command=tk._setit(outputUnit, option))
-
-def set_to_time():
-    new_options_list = options_dict.get('time')
-    unit_selector1['menu'].delete(0, END)
-    unit_selector2['menu'].delete(0, END)
-
-    inputUnit.set(new_options_list[0])
-    outputUnit.set(new_options_list[0])
-
-    for option in new_options_list:
-        unit_selector1['menu'].add_command(label=option, command=tk._setit(inputUnit, option))
-
-    for option in new_options_list:
-        unit_selector2['menu'].add_command(label=option, command=tk._setit(outputUnit, option))
-
-def set_to_storage():
-    new_options_list = options_dict.get('storage')
+# this function updates the option menu to the 'dimension' specified
+def set_to(dimension):
+    new_options_list = options_dict.get(dimension)
     unit_selector1['menu'].delete(0, END)
     unit_selector2['menu'].delete(0, END)
 
@@ -238,11 +185,12 @@ def set_to_storage():
 # this section creates the menu options
 menubar = Menu(root)  # creates menu bar
 filemenu = Menu(menubar, tearoff=0)
-filemenu.add_command(label="Length Converter", command=set_to_length)
-filemenu.add_command(label="Volume Converter", command=set_to_volume)
-filemenu.add_command(label="Weight Converter", command=set_to_weight)
-filemenu.add_command(label="Time Converter", command=set_to_time)
-filemenu.add_command(label="Storage Converter", command=set_to_storage)
+filemenu.add_command(label="Length Converter", command=lambda: set_to('length'))
+filemenu.add_command(label="Volume Converter", command=lambda: set_to('volume'))
+filemenu.add_command(label="Weight Converter", command=lambda: set_to('weight'))
+filemenu.add_command(label="Time Converter", command=lambda: set_to('time'))
+filemenu.add_command(label="Storage Converter", command=lambda: set_to('storage'))
+filemenu.add_command(label="Speed Converter", command=lambda: set_to('speed'))
 filemenu.add_command(label="Settings", command=create_options_window)
 filemenu.add_separator()
 filemenu.add_command(label="Exit", command=root.quit)
